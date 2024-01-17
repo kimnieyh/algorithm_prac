@@ -5,15 +5,18 @@ Mlst = list(map(int,input().split()))
 
 Nlst = sorted(Nlst)
 
-def find(lst,find,low,high):
-    mid = low+(high-low)//2
-    if find == lst[mid]:
-        return print(1)
-    elif find > lst[mid]:
-        return find(lst,mid+1,high)
-    else:
-        return find(lst,low,mid-1)
-
+def find(lst,target,low,high):
+    while low <= high:
+        mid = low + (high - low) // 2
+        if target == lst[mid]:
+            print(1)
+            return
+        elif target > lst[mid]:
+            low = mid + 1
+        else:
+            high = mid - 1
+    print(0)
+    return
 for x in Mlst:
-    result = find(Nlst,x,0,N)
+    find(Nlst,x,0,N-1)
     
