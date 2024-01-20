@@ -21,5 +21,5 @@ def make(index, current_sum):
         make(index + 1, current_sum + lst[index])
 
 # 부분수열을 생성하고 make 함수 호출
-make(0, 0)
+make(0, 00)
 print(cnt[0]-1 if S == 0 else cnt[0] )
