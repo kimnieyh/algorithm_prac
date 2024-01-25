@@ -15,6 +15,7 @@ for h in range(H):
             cur_map = tomato_map[h][y][x]
             if cur_map == 1: 
                 queue.append([0,h,y,x])
+                visited[h][y][x] == True
             if cur_map != -1 : 
                 if h > 0 and tomato_map[h-1][y][x] != -1:
                     if tomato_map[h-1][y][x] == 0 : 
@@ -48,18 +49,22 @@ for h in range(H):
                         Elist[h][y][x].append([1,h,y+1,x])
                     else:
                         Elist[h][y][x].append([0,h,y+1,x])
-cnt = 0
-while True :
-    new_queue = deque([])
-    if cnt == 0 :
-        new_queue = queue
-    while queue :
-        w,h,y,x = queue.popleft()
-        if not visited[h][y][x] :
-            visited[h][y][x] = True
-            for x in Elist[h][y][x] :
-                
+answer = []
 
+while queue:
+    w,h,y,x= queue.popleft()
+    if visited[h][y][x]:
+        answer.append(w)
+    for next_w,next_h,next_y,next_x in Elist[h][y][x] :
+        if not visited[next_h][next_y][next_x] :
+            visited[next_h][next_y][next_x] = True
+            queue.append([next_w+w,next_h,next_y,next_x])
 
+for i in range(H):
+    for j in range(M):
+        if False in visited[i][j]: 
+            answer = [-1]
+
+print(max(answer))
 
 
