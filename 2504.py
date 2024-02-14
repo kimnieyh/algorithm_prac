@@ -1,45 +1,37 @@
-from collections import deque
+input_value = list(input())
 
-input_value = input()
+stack = []
+answer = 0
+tmp = 1
 
-stack_1 = deque(input_value)
-# deque(['(', '(', ')', '[', '[', ']', ']', ')', '(', '[', ']', ')'])
-stack_2 = deque([])
-stack_3 = deque([])
-result = 0
-ex_x = 0
-while stack_1:
-    x = stack_1.pop()
-    if x == ']' or x == ')':
-        stack_2.append(x)
-    elif ex_x == ')' and x =='(' :
-        stack_2.pop()
-        stack_3.append(2)
-        result = 0
-    elif ex_x == ']' and x == '[' :
-        stack_2.pop()
-        stack_3.append(3)
-        result = 0
+for i in range(len(input_value)):
+    now = input_value[i]
+    if now == '(':
+        stack.append(now)
+        tmp *= 2
+    elif now =='[':
+        stack.append(now)
+        tmp *= 3
+    elif now == ')':
+        if not stack or stack[-1] == '[':
+            answer = 0
+            break
+        ex = input_value[i-1]
+        if ex == '(':
+            answer += tmp
+        stack.pop()
+        tmp //= 2
     else :
-        if stack_2:
-            temp = stack_2.pop()
-            if temp == ']' and x == '[':
-                result = stack_3.pop()
-                result *= 3
-                stack_3.append(result)
-                result=0
-            elif temp == ')' and x == '(':
-                result = stack_3.pop()
-                result *= 2
-                stack_3.append(result)
-                result=0
-            else:
-                stack_3 = deque([0])
-                break
-            if not stack_2 :
-                stack_3.append(result)
-                result = 0
-    ex_x = x 
-    print(stack_3,result)   
+        if not stack or stack[-1] == '(':
+            answer = 0
+            break
+        ex = input_value[i-1]
+        if ex == '[':
+            answer+=tmp
+        stack.pop()
+        tmp //=3
 
-print(sum(stack_3))
+if stack:
+    print(0)
+else : 
+    print(answer)
